@@ -2,6 +2,7 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class Aplicacion {
@@ -42,8 +43,17 @@ public class Aplicacion {
 		return lista;
 	}
 	
-	public Participante buscarParticipante() {
-		
+	public void buscarParticipante(Aplicacion aplicacion) 
+	{
+		Proyecto proyectoActual = aplicacion.getProyectoActual();
+		ArrayList<Participante> participantes = proyectoActual.getParticipantes();
+		Iterator<Participante> iter = participantes.iterator();
+		while (iter.hasNext()) {
+			Participante participante = iter.next();
+			String nombre = participante.getNombre();
+			String correo = participante.getCorreo();
+			System.out.println(nombre + ": " + correo);
+		}
 	}
 	
 	public Proyecto buscarProyecto() {
@@ -64,7 +74,25 @@ public class Aplicacion {
 		
 	}
 	
-	public void agregarParticipante(){
+	public void agregarParticipante(String nombre, String correo, Aplicacion aplicacion)
+	{
+		Participante participante = new Participante(nombre,correo);
+		Proyecto proyectoActual = aplicacion.getProyectoActual();
+		ArrayList<Proyecto> proyectos = aplicacion.getProyectos();
+		Iterator<Proyecto> iter = proyectos.iterator();
+		while (iter.hasNext()) {
+			Proyecto proyecto = iter.next();
+			if (proyecto.equals(proyectoActual)){
+				iter.remove();
+			}
+		}
+		ArrayList<Participante> listaVieja = proyectoActual.getParticipantes();
+		listaVieja.add(participante);
+		proyectoActual.setParticipantes(listaVieja);
+		aplicacion.setProyectoActual(proyectoActual);
+		proyectos.add(proyectoActual);
+		aplicacion.setProyectos(proyectos);
+		
 		
 	}
 	
@@ -141,6 +169,7 @@ public class Aplicacion {
 				
 				Proyecto proyecto = aplicacion.ejecutarCrearProyecto(nombre, descripcion, objDate, fechaFinal, nombreD, correo);
 				ArrayList<Proyecto> actualizacionLista = aplicacion.agregarProyecto(proyecto, aplicacion);
+				
 				aplicacion.setProyectos(actualizacionLista);
 				aplicacion.setProyectoActual(proyecto);
 			}
@@ -156,8 +185,23 @@ public class Aplicacion {
 				System.out.println("Descripcion: " + proyectoActual.getInfo());
 			}
 			else if (opcionSeleccionada == 4)
-			{
-				aplicacion.agregarParticipante();
+			{	
+				sc.nextLine();
+				System.out.println("\nLista actual de participantes: ");
+				aplicacion.buscarParticipante(aplicacion);
+				System.out.println("\n¿Desea continuar? (Si o No):");
+				String opcion = sc.nextLine();
+				if (opcion.equals("Si")) {
+					System.out.println("\nCreando participante...");
+					
+					System.out.println("\nIngrese el nombre; ");
+					String nombre = sc.nextLine();
+					System.out.println("\nIngrese el correo; ");
+					String correo = sc.nextLine();
+					aplicacion.agregarParticipante(nombre,correo,aplicacion);
+					System.out.println("Participante agregado existosamente.");
+				}
+				
 			}
 			else if (opcionSeleccionada == 5)
 			{

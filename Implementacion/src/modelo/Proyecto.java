@@ -45,6 +45,11 @@ public class Proyecto {
 		return participantes;
 	}
 	
+	
+	public void setParticipantes(ArrayList<Participante> participantes) 
+	{
+		this.participantes = participantes;
+	}
 
 	public void agregarActividad(Actividad nuevaActividad){
 		

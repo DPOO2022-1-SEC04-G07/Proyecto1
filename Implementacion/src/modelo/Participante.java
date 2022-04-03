@@ -15,12 +15,12 @@ public class Participante {
 	
 	
 	
-	public String darNombre()
+	public String getNombre()
 	{
 		return nombre;
 	}
 	
-	public String darCorreo()
+	public String getCorreo()
 	{
 		return correo;
 	}
