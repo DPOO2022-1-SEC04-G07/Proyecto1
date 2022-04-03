@@ -6,4 +6,19 @@ public class Actividad {
 	
 	private String info;
 	
+	public void agregarTiempo(Cronometro nuevoTiempo)
+	{
+		
+	}
+	
+	public Actividad (String laInfo) {
+
+		
+	}
+	
+	public int contarTiempo() {
+		
+	}
+	public  modificarTiemopo??
+	
 }
