@@ -1,7 +1,7 @@
 package modelo;
 
 import java.util.ArrayList;
-import java.io.BufferedReader;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Aplicacion {
@@ -14,9 +14,32 @@ public class Aplicacion {
 		this.proyectos = new ArrayList<Proyecto>();
 	}
 	
-	public void agregarProyecto(Proyecto nuevoProyecto)
+	public ArrayList<Proyecto> getProyectos()
 	{
+		return proyectos;
+	}
+	
+	public Proyecto getProyectoActual()
+	{
+		return proyectoActual;
+	}
+	
+	public void setProyectos(ArrayList<Proyecto> actualizacionLista)
+	{
+		this.proyectos = actualizacionLista; 
+	}
+	
+	public void setProyectoActual(Proyecto actualizacionProyecto)
+	{
+		this.proyectoActual = actualizacionProyecto;
+	}
 		
+	
+	public ArrayList<Proyecto> agregarProyecto(Proyecto nuevoProyecto, Aplicacion aplicacion)
+	{
+		ArrayList<Proyecto> lista = getProyectos();
+		lista.add(nuevoProyecto);
+		return lista;
 	}
 	
 	public Participante buscarParticipante() {
@@ -27,8 +50,14 @@ public class Aplicacion {
 		
 	}
 	
-	public void ejecutarCrearProyecto() {
-		
+	public Proyecto ejecutarCrearProyecto(String nombre, String descripcion, Date objDate, String fechaFinal, String nombreD, String correo) {
+		Proyecto proyecto = new Proyecto(nombre,descripcion,objDate,fechaFinal,nombreD,correo);
+		return proyecto;
+	}
+	
+	public Proyecto ejecutarProyectoActual(Aplicacion aplicacion)
+	{
+		return aplicacion.getProyectoActual();
 	}
 	
 	public void ejecutarSeleccionarProyecto() {
@@ -61,13 +90,14 @@ public class Aplicacion {
 	{
 		System.out.println("\nOpciones de la aplicación");
 		System.out.println("1. Crear proyecto");
-		System.out.println("2. Abrir proyecto");
-		System.out.println("3. Añadir participante");
-		System.out.println("4. Crear Actividad");
-		System.out.println("5. Continuar Actividad");
-		System.out.println("6. Modificar Actividad");
-		System.out.println("7. Generar Reporte de tiempos");
-		System.out.println("8. Salir de la aplicación");
+		System.out.println("2. Proyecto seleccionado actual");
+		System.out.println("3. Abrir proyecto");
+		System.out.println("4. Añadir participante al proyecto");
+		System.out.println("5. Crear Actividad");
+		System.out.println("6. Continuar Actividad");
+		System.out.println("7. Modificar Actividad");
+		System.out.println("8. Generar Reporte de tiempos");
+		System.out.println("9. Salir de la aplicación");
 	}
 	
 	
@@ -87,35 +117,67 @@ public class Aplicacion {
 			
 			if (opcionSeleccionada == 1) 
 			{
-				aplicacion.ejecutarCrearProyecto();
+				sc.nextLine();
+				
+				System.out.println("\nCreando proyecto...");
+				System.out.println("\nIngrese el Titulo del proyecto: ");
+				String nombre = sc.nextLine();
+				
+				System.out.println("\nIngrese la descripcion del proyecto: ");
+				String descripcion = sc.nextLine();
+				
+				System.out.println("\nFecha Inicio: ");
+				Date objDate = new Date();
+				System.out.println(objDate.toString());
+				
+				System.out.println("\nFecha Entrega en formato (MM-DD-AAAA): ");
+				String fechaFinal = sc.nextLine();
+				
+				System.out.println("\nIngrese el nombre del dueño del proyecto: ");
+				String nombreD = sc.nextLine();
+				
+				System.out.println("\nIngrese el correo electronico del dueño del proyecto:");
+				String correo = sc.nextLine();
+				
+				Proyecto proyecto = aplicacion.ejecutarCrearProyecto(nombre, descripcion, objDate, fechaFinal, nombreD, correo);
+				ArrayList<Proyecto> actualizacionLista = aplicacion.agregarProyecto(proyecto, aplicacion);
+				aplicacion.setProyectos(actualizacionLista);
+				aplicacion.setProyectoActual(proyecto);
 			}
-			else if (opcionSeleccionada == 2) 
+			
+			else if (opcionSeleccionada == 3) 
 			{
 				aplicacion.ejecutarSeleccionarProyecto();
 			}
-			else if (opcionSeleccionada == 3)
+			else if (opcionSeleccionada == 2) 
 			{
-				aplicacion.agregarParticipante();
+				Proyecto proyectoActual = aplicacion.ejecutarProyectoActual(aplicacion);
+				System.out.println("\nNombre proyecto actual: " + proyectoActual.getNombre());
+				System.out.println("Descripcion: " + proyectoActual.getInfo());
 			}
 			else if (opcionSeleccionada == 4)
 			{
-				aplicacion.crearActividad();
+				aplicacion.agregarParticipante();
 			}
 			else if (opcionSeleccionada == 5)
 			{
-				aplicacion.continuarActividad();
+				aplicacion.crearActividad();
 			}
 			else if (opcionSeleccionada == 6)
 			{
-				aplicacion.modificarActividad();
+				aplicacion.continuarActividad();
 			}
 			else if (opcionSeleccionada == 7)
 			{
-				aplicacion.generarReporte();	
+				aplicacion.modificarActividad();
 			}
 			else if (opcionSeleccionada == 8)
 			{
-				System.out.println("Saliendo de la aplicación ...");
+				aplicacion.generarReporte();	
+			}
+			else if (opcionSeleccionada == 9)
+			{
+				System.out.println("\nSaliendo de la aplicación ...");
 				continuar = false;
 			}
 			else

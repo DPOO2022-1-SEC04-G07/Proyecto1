@@ -11,28 +11,40 @@ public class Proyecto {
 	
 	private Date fechaInicial;
 	
-	private Date fechaFinal;
+	private String fechaFinal;
 	
 	private ArrayList<Participante> participantes;
 	
 	private ArrayList<Actividad> actividades;
 
-	public Proyecto(String elNombre, String laInfo, Date fechaI, Date fechaF, ArrayList<Participante> losParticipantes, ArrayList<Actividad> lasActividades) {
+	public Proyecto(String elNombre, String laInfo, Date fechaI, String fechaF, String nombre, String correo) {
 			this.nombre = elNombre;
 			this.info = laInfo;
 			this.fechaInicial = fechaI;
 			this.fechaFinal = fechaF;
+			Participante dueño = new Participante(nombre,correo);
+			ArrayList<Participante> losParticipantes = new ArrayList<Participante>();
+			losParticipantes.add(dueño);
 			this.participantes = losParticipantes;
+			ArrayList<Actividad> lasActividades = new ArrayList<Actividad>();
 			this.actividades = lasActividades;
 	}
 	
-	public Proyecto(String elCorreo) {
-		
+	public String getNombre()
+	{
+		return nombre;
 	}
-
-	public Proyecto(String elCorreo) {
 	
+	public String getInfo()
+	{
+		return info;
 	}
+	
+	public ArrayList<Participante> getParticipantes()
+	{
+		return participantes;
+	}
+	
 
 	public void agregarActividad(Actividad nuevaActividad){
 		
