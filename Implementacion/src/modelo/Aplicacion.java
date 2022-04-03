@@ -56,8 +56,32 @@ public class Aplicacion {
 		}
 	}
 	
-	public Proyecto buscarProyecto() {
+	public void buscarProyecto(Aplicacion aplicacion, Scanner sc) {
+		ArrayList<Proyecto> proyectos = aplicacion.getProyectos();
+		int contador = 1;
+		Iterator<Proyecto> iter = proyectos.iterator();
+		while (iter.hasNext()){
+			Proyecto proyecto = iter.next();
+			String nombre = proyecto.getNombre();
+			String info = proyecto.getInfo();
+			System.out.println(contador+". Nombre: " + nombre + "   Descrpción: " + info );
+			contador += 1;
+		}
+		System.out.println("\nEscriba el número del proyecto seleccionado: ");
+		int opcion = sc.nextInt();
+		int indice = opcion-1 ;
+		Proyecto seleccionProyecto = proyectos.get(indice);
 		
+		sc.nextLine();
+		System.out.println("El proyecto seleccionado es: ");
+		String nombre = seleccionProyecto.getNombre();
+		String info = seleccionProyecto.getInfo();
+		System.out.println("Nombre: " + nombre + "   Descrpción: " + info );
+		System.out.println("\n¿Desea continuar? (Si o No):");
+		String opcion2 = sc.nextLine();
+		if (opcion2.equals("Si")) {
+			aplicacion.setProyectoActual(seleccionProyecto);
+		}
 	}
 	
 	public Proyecto ejecutarCrearProyecto(String nombre, String descripcion, Date objDate, String fechaFinal, String nombreD, String correo) {
@@ -176,6 +200,8 @@ public class Aplicacion {
 			
 			else if (opcionSeleccionada == 3) 
 			{
+				System.out.print("Buscando proyectos...\n");
+				aplicacion.buscarProyecto(aplicacion,sc);
 				aplicacion.ejecutarSeleccionarProyecto();
 			}
 			else if (opcionSeleccionada == 2) 
