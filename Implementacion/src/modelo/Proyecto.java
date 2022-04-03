@@ -8,8 +8,25 @@ public class Proyecto {
 	
 	private String info;
 	
-	private ArrayList<Participante> participantes;
+	private List<Participante> participantes;
 	
-	private ArrayList<Actividad> actividades;
+	private List<Actividad> actividades;
+	
+	
+	public Proyecto(String elCorreo) {
+		
+	}
+
+	public Proyecto(String elCorreo) {
+	
+	}
+
+	public void agregarActividad(Actividad nuevaActividad){
+		
+	}
+	
+	public Actividad buscarActividad() {
+		
+	}
 	
 }
