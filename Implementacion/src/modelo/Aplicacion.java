@@ -64,10 +64,10 @@ public class Aplicacion {
 			Proyecto proyecto = iter.next();
 			String nombre = proyecto.getNombre();
 			String info = proyecto.getInfo();
-			System.out.println(contador+". Nombre: " + nombre + "   Descrpci髇: " + info );
+			System.out.println(contador+". Nombre: " + nombre + "   Descrpci贸n: " + info );
 			contador += 1;
 		}
-		System.out.println("\nEscriba el n鷐ero del proyecto seleccionado: ");
+		System.out.println("\nEscriba el n煤mero del proyecto seleccionado: ");
 		int opcion = sc.nextInt();
 		int indice = opcion-1 ;
 		Proyecto seleccionProyecto = proyectos.get(indice);
@@ -76,8 +76,8 @@ public class Aplicacion {
 		System.out.println("El proyecto seleccionado es: ");
 		String nombre = seleccionProyecto.getNombre();
 		String info = seleccionProyecto.getInfo();
-		System.out.println("Nombre: " + nombre + "   Descrpci髇: " + info );
-		System.out.println("\n緿esea continuar? (Si o No):");
+		System.out.println("Nombre: " + nombre + "   Descrpci贸n: " + info );
+		System.out.println("\n驴Desea continuar? (Si o No):");
 		String opcion2 = sc.nextLine();
 		if (opcion2.equals("Si")) {
 			aplicacion.setProyectoActual(seleccionProyecto);
@@ -120,7 +120,8 @@ public class Aplicacion {
 		
 	}
 	
-	public void crearActividad() {
+	public void crearActividad(String nombre, String laInfo, String fechaInicial, String fechaFinal) {
+		Actividad actividad = new Actividad(nombre, laInfo, fechaInicial, fechaFinal);
 		
 	}
 	
@@ -140,21 +141,21 @@ public class Aplicacion {
 			
 	public void mostrarMenu()
 	{
-		System.out.println("\nOpciones de la aplicaci髇");
+		System.out.println("\nOpciones de la aplicaci贸n");
 		System.out.println("1. Crear proyecto");
 		System.out.println("2. Proyecto seleccionado actual");
 		System.out.println("3. Abrir proyecto");
-		System.out.println("4. A馻dir participante al proyecto");
+		System.out.println("4. A帽adir participante al proyecto");
 		System.out.println("5. Crear Actividad");
 		System.out.println("6. Continuar Actividad");
 		System.out.println("7. Modificar Actividad");
 		System.out.println("8. Generar Reporte de tiempos");
-		System.out.println("9. Salir de la aplicaci髇");
+		System.out.println("9. Salir de la aplicaci贸n");
 	}
 	
 	
 	public static void main(String[] args) {
-		System.out.println("Bienvenido a la aplicaci髇 de proyectos");
+		System.out.println("Bienvenido a la aplicaci贸n de proyectos");
 		Aplicacion aplicacion = new Aplicacion();
 		Scanner sc= new Scanner(System.in); 
 		
@@ -185,10 +186,10 @@ public class Aplicacion {
 				System.out.println("\nFecha Entrega en formato (MM-DD-AAAA): ");
 				String fechaFinal = sc.nextLine();
 				
-				System.out.println("\nIngrese el nombre del due駉 del proyecto: ");
+				System.out.println("\nIngrese el nombre del due帽o del proyecto: ");
 				String nombreD = sc.nextLine();
 				
-				System.out.println("\nIngrese el correo electronico del due駉 del proyecto:");
+				System.out.println("\nIngrese el correo electronico del due帽o del proyecto:");
 				String correo = sc.nextLine();
 				
 				Proyecto proyecto = aplicacion.ejecutarCrearProyecto(nombre, descripcion, objDate, fechaFinal, nombreD, correo);
@@ -215,7 +216,7 @@ public class Aplicacion {
 				sc.nextLine();
 				System.out.println("\nLista actual de participantes: ");
 				aplicacion.buscarParticipante(aplicacion);
-				System.out.println("\n緿esea continuar? (Si o No):");
+				System.out.println("\n驴Desea continuar? (Si o No):");
 				String opcion = sc.nextLine();
 				if (opcion.equals("Si")) {
 					System.out.println("\nCreando participante...");
@@ -231,7 +232,28 @@ public class Aplicacion {
 			}
 			else if (opcionSeleccionada == 5)
 			{
-				aplicacion.crearActividad();
+				sc.nextLine();
+				
+				System.out.println("\nCreando actividad...");
+				
+				System.out.println("\nIngrese el nombre de la actividad: ");
+				String nombre = sc.nextLine();
+				
+				System.out.println("\nIngrese una breve descripci贸n de la actividad: ");
+				String info = sc.nextLine();
+				
+				System.out.println("\nFecha Inicio: ");
+				
+				Date fecheInicio = new Date();
+				
+				System.out.println(objDate.toString());
+				
+				System.out.println("\nFecha Entrega (MM-DD-AAAA): ");
+				
+				String fechaFinal = sc.nextLine();
+				
+				Actividad actividad = aplicacion.crearActividad(nombre, info, fechaInicio, fechaFinal);
+			
 			}
 			else if (opcionSeleccionada == 6)
 			{
@@ -247,17 +269,17 @@ public class Aplicacion {
 			}
 			else if (opcionSeleccionada == 9)
 			{
-				System.out.println("\nSaliendo de la aplicaci髇 ...");
+				System.out.println("\nSaliendo de la aplicaci贸n ...");
 				continuar = false;
 			}
 			else
 			{
-				System.out.println("Por favor seleccione una opci髇 v醠ida.");
+				System.out.println("Por favor seleccione una opci贸n v谩lida.");
 			}
 			}
 			catch (NumberFormatException e)
 			{
-				System.out.println("Debe seleccionar uno de los n鷐eros de las opciones.");
+				System.out.println("Debe seleccionar uno de los n煤meros de las opciones.");
 			}
 		}
 	}
